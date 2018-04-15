@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Say!</title>
+</head>
+<script type="text/javascript" src="./hz.js"></script>
+<script>
+      function say(t) { 
+      	const { exec } = require('child_process');
+      	exec('say ' + t)
+      }
+      
+      function pinyin(cc){
+		var str='';
+		var s;
+		for(var i=0;i<cc.length;i++){
+		//alert(cc.charAt(i)+" = "+cc.charCodeAt(i));
+			if(icibahy.indexOf(cc.charAt(i))!=-1&&cc.charCodeAt(i)>200){
+				s=1;
+				while(icibahy.charAt(icibahy.indexOf(cc.charAt(i))+s)!=","){
+					str+=icibahy.charAt(icibahy.indexOf(cc.charAt(i))+s);
+					s++;
+				}
+
+				str+=" ";
+			}
+			else{
+				str+=cc.charAt(i);
+			}
+		}
+		return str;
+	  }
+
+	  function convert(t) {
+      	var py = pinyin(t)
+      	document.getElementById('to').innerHTML = py
+      }
+
+  </script>
+  <body>
+  	<textarea id="from" style="width:500px;height:300px;"></textarea>
+  	<p/>
+  	<p/>
+  	<button onclick="say(getElementById('from').value)">Say...</button>
+  	<p/>
+  	<p/>
+  	<button onclick="convert(getElementById('from').value)">Convert to Pinyin</button>
+  	<p/>
+  	<p/>
+  	<p id="to">Here...</p>
+  </body>
+  </html>
